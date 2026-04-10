@@ -539,6 +539,110 @@
   transition: width 0.1s ease-out; /* 動きを滑らかに */
 }
 
+/* カード全体のコンテナ（横並びにする場合は display: grid など） */
+.story-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.story-card {
+  background: rgba(255, 248, 242, 0.03);
+  border: 1px solid rgba(232, 207, 138, 0.15);
+  border-radius: 15px;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(5px);
+}
+
+.story-card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(232, 207, 138, 0.4);
+  background: rgba(255, 248, 242, 0.07);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* 画像エリアのスタイリング */
+.card-image-wrap {
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+  position: relative;
+}
+
+.card-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 枠いっぱいに広げる */
+  transition: transform 0.8s ease;
+  filter: sepia(10%) brightness(90%); /* 雰囲気を統一 */
+}
+
+.story-card:hover .card-image-wrap img {
+  transform: scale(1.1); /* ホバーでゆっくりズーム */
+}
+
+/* テキストエリア */
+.card-content {
+  padding: 25px;
+}
+
+.card-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.8rem;
+  color: var(--rose-pale);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.6rem;
+  color: #E8CF8A;
+  margin-bottom: 12px;
+}
+
+.card-body {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: rgba(255, 248, 242, 0.8);
+  font-family: serif;
+}
+
+.img-meta {
+  /* タイポグラフィ */
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.75rem; /* 小さめにして精密感を出す */
+  font-style: italic;
+  font-weight: 300;
+  
+  /* カラー：ローズ・ペールよりも少し落ち着いたゴールド系 */
+  color: rgba(232, 207, 138, 0.6); 
+  
+  /* レイアウト */
+  margin-top: -8px; /* タイトルとの距離を詰める */
+  margin-bottom: 15px;
+  padding-left: 2px;
+  
+  /* 装飾：控えめなレターパッチング */
+  letter-spacing: 1px;
+  text-transform: none; /* 日時はそのまま表示 */
+  
+  /* 下に非常に細い線を引いて、区切りを作る（任意） */
+  border-left: 1px solid rgba(232, 160, 176, 0.3);
+  padding-left: 10px;
+}
+
+/* ホバー時に少しだけ色が濃くなる演出 */
+.story-card:hover .img-meta {
+  color: rgba(232, 207, 138, 0.9);
+  transition: color 0.4s ease;
+}
 
 /* 消した後のアニメーション用クラス */
 .blown {
@@ -651,10 +755,10 @@
     <p class="label">✦ A Word for You ✦</p>
     <div class="gold-line"></div>
     <blockquote>
-      "For I know the plans I have for you,"
-      declares the Lord,
-      "plans to prosper you and not to harm you,
-      plans to give you hope and a future."
+      "For I know the thoughts that I think toward you,"
+      saith the Lord, 
+      "thoughts of peace, and not of evil,
+      to give you an expected end."
     </blockquote>
     <div class="gold-line"></div>
     <cite>Jeremiah 29:11</cite>
@@ -672,24 +776,40 @@
 
   <div class="story-cards">
     <div class="story-card reveal">
+        <div class="card-image-wrap">
+          <img src="images/olango.jpg" alt="The Beginning">
+        </div>
       <p class="card-num">Chapter 01</p>
       <p class="card-title">The Beginning</p>
-      <p class="card-body placeholder-note">[✏️ Write your story here — how you met, your first moment together...]</p>
+      <p class="img-meta">Olango Island - January 30, 2023 13:12</p>
+      <p class="card-body placeholder-note">We both looked so perfectly awkward. Yet, we already know that this was the beginning of a lifetime together.</p>
     </div>
     <div class="story-card reveal">
+    <div class="card-image-wrap">
+      <img src="images/hiyoshi.jpg" alt="A Day to Remember">
+    </div>
       <p class="card-num">Chapter 02</p>
       <p class="card-title">A Day to Remember</p>
-      <p class="card-body placeholder-note">[✏️ A favourite memory or adventure you shared together...]</p>
+      <p class="img-meta">Hiyoshi Sta. - December 14, 2024 12:07</p>
+      <p class="card-body placeholder-note">I still vividly remember that surreal feeling of having you here in Hiyoshi. It was the beautiful prelude to all the exciting days we were about to share in Japan.</p>
     </div>
     <div class="story-card reveal">
+    <div class="card-image-wrap">
+      <img src="images/okurayama.jpg" alt="Yokohama Together">
+    </div>
       <p class="card-num">Chapter 03</p>
-      <p class="card-title">Yokohama, Together</p>
-      <p class="card-body placeholder-note">[✏️ Life in Yokohama — a small moment, a favourite spot, or a daily ritual...]</p>
+      <p class="card-title">The Day We Became a Family</p>
+      <p class="img-meta">Okurayama - May 27, 2025 15:38</p>
+      <p class="card-body placeholder-note">Just like the plums of Okurayama Park, our first day as a family was beautifully sweet and sour—a memory we will cherish forever.</p>
     </div>
     <div class="story-card reveal">
+    <div class="card-image-wrap">
+      <img src="images/morning-before-leaving.jpg" alt="Looking Forward">
+    </div>
       <p class="card-num">Chapter 04</p>
-      <p class="card-title">Looking Forward</p>
-      <p class="card-body placeholder-note">[✏️ Your hopes and dreams for the future together...]</p>
+      <p class="card-title">Keep Looking Forward</p>
+      <p class="img-meta">Home - August 9, 2025 6:33</p>
+      <p class="card-body placeholder-note">Saying goodbye to you that morning felt like losing a piece of my heart—a quiet yet overwhelming pain. But I hold onto the joy that very soon, when we see each other again, 'goodbye' will be a word we never have to say ever again.</p>
     </div>
   </div>
 </section>
@@ -703,11 +823,10 @@
 
     <div class="letter-paper">
       <p class="letter-greeting">My dearest Rachel,</p>
-      <p class="letter-body">[✏️ Write your letter here. Tell Rachel what she means to you, what you love about her, and your prayer for her on this birthday. This is your space to speak from the heart.]
+      <p class="letter-body">Happy 26th birthday, Rachel. I was finally expecting to celebrate your birthday together this year, but it seems God is giving us one last test. It has been 3 years and 7 months since our journey started. We have navigated through what others might call "hardships," but every time we faced a challenge, we overcame it together.
 
-
-</p>
-      <p class="letter-sign">Forever yours,<br>Nish 🌹</p>
+Whenever I felt pessimistic, your innate optimism always lifted me up and carried me through. My life has been so much more exciting because of you. Thank you for being the light that guides me through the dark. This birthday is just one more chapter before we finally close the distance for good. I can't wait to start our "forever" soon honeyy❤️</p>
+      <p class="letter-sign">Your honey,<br>Nish 🌹</p>
     </div>
   </div>
 </section>
@@ -912,7 +1031,7 @@ startBtn.addEventListener('click', async () => {
         anime({
           targets: document.scrollingElement,
           scrollTop: targetPosition,
-          duration: 3000,
+          duration: 2000,
           easing: 'easeInOutQuad',
           complete: () => {
             // スクロールが終わったら確実に実行
