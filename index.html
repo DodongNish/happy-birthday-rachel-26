@@ -944,7 +944,7 @@ async function startBGM() {
   const synth = new Tone.PolySynth(Tone.Synth, {
     oscillator: { type: 'triangle' },
     envelope: { attack: 0.08, decay: 0.2, sustain: 0.6, release: 1.2 },
-    volume: -16
+    volume: -18
   }).connect(chorus);
 
   // Pad underneath
@@ -1013,19 +1013,20 @@ startBtn.addEventListener('click', async () => {
   document.body.classList.remove('locked');
 
   try {
-    // 2. Tone.js (BGM) の開始
-    // ブラウザの保護を解除するためにクリックイベント内で必須
-    await Tone.start();
-    startBGM(); 
 
-    // 3. マイク権限の先行取得
+    // 1. マイク権限の先行取得
     // ここで許可を得ておけば、後のロウソクシーンでスムーズに開始できる
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     // 一旦ストリームを保持するか、一度閉じて後で再開できるようにする
     window.preAuthorizedStream = stream;
 
-    // 4. ジャイロセンサー（星の揺れ）の許可 (iOS用)
+    // 2. ジャイロセンサー（星の揺れ）の許可 (iOS用)
     requestOrientationPermission();
+
+    // 3. Tone.js (BGM) の開始
+    // ブラウザの保護を解除するためにクリックイベント内で必須
+    await Tone.start();
+    startBGM(); 
       
 
     console.log("All systems initialized: BGM, Mic, and Orientation");
