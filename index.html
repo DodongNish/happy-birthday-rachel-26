@@ -1020,7 +1020,14 @@ startBtn.addEventListener('click', async () => {
     // 4. ジャイロセンサー（星の揺れ）の許可 (iOS用)
     requestOrientationPermission();
       
-    // 3. 次のシーン（誕生日シーン）までゆっくりスクロール
+
+    console.log("All systems initialized: BGM, Mic, and Orientation");
+  } catch (err) {
+    console.warn("User denied mic or audio failed:", err);
+    // マイクが拒否されても体験を続けられるようエラーは握りつぶしすぎない
+  }finally {
+
+    // 次のシーン（誕生日シーン）までゆっくりスクロール
     const nextSection = document.getElementById('scene-birthday');
     
     // ほんの少し間を置いてからスクロールを開始（余韻のため）
@@ -1040,11 +1047,6 @@ startBtn.addEventListener('click', async () => {
           }
         });
     }, 800);
-
-    console.log("All systems initialized: BGM, Mic, and Orientation");
-  } catch (err) {
-    console.warn("User denied mic or audio failed:", err);
-    // マイクが拒否されても体験を続けられるようエラーは握りつぶしすぎない
   }
 });
 
