@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Happy Birthday Rachel 🌹</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Great+Vibes&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+
+<!-- Anime.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<!-- Tone.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+
+<style>
+  :root {
+    --rose: #C8637A;
+    --rose-light: #E8A0B0;
+    --rose-pale: #F5D5DC;
+    --gold: #C9A84C;
+    --gold-light: #E8CF8A;
+    --cream: #FFF8F2;
+    --dark: #2A1A1F;
+    --text: #3D2028;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: auto;
+    overflow-y: scroll;
+    height: 100%;
+  }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: linear-gradient(
+      to bottom,
+      #0D0508 0%,
+      #1A0A10 12%,
+      #2A1520 28%,
+      #1C0E14 42%,
+      #130810 55%,
+      #2A1520 70%,
+      #1A0A10 84%,
+      #0D0508 100%
+    );
+    background-attachment: fixed;
+    color: var(--cream);
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    min-height: 100svh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 48px 32px;
+    /* Each section fades in when triggered */
+    opacity: 0;
+    transition: opacity 1.2s ease;
+  }
+  section.scene-visible {
+    opacity: 1;
+  }
+  /* Opening is always visible */
+  #scene-opening {
+    opacity: 1 !important;
+  }
+
+  /* ── PARALLAX STARS LAYER ── */
+  #stars-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    display: block;
+  }
+
+
+
+  /* ══════════════════════════════
+     SCENE 1 — OPENING
+  ══════════════════════════════ */
+  #scene-opening {
+    z-index: 1;
+  }
+  #scene-opening .bg-cross {
+    position: absolute;
+    width: 280px; height: 280px;
+    opacity: 0.04;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -58%);
+  }
+  #opening-content {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+  }
+  #opening-content .from-tag {
+    font-family: 'Lato', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  #opening-content h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(60px, 18vw, 96px);
+    color: var(--cream);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  #opening-content .subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(16px, 5vw, 22px);
+    font-style: italic;
+    color: var(--rose-pale);
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
+  .gold-line {
+    width: 60px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 20px auto;
+  }
+  /* start-btn removed */
+
+  /* ── FANCY SCROLL ARROW (scene 1 only) ── */
+  .fancy-scroll {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    animation: fancy-bounce 2.4s ease-in-out infinite;
+  }
+  @keyframes fancy-bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.7; }
+    50%       { transform: translateX(-50%) translateY(9px); opacity: 1; }
+  }
+  .fancy-scroll-arrow {
+    width: 40px; height: 40px;
+    filter: drop-shadow(0 0 6px rgba(201,168,76,0.5));
+  }
+  .fancy-scroll-dots {
+    display: flex;
+    gap: 5px;
+  }
+  .fancy-scroll-dots span {
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0.5;
+    animation: dot-pulse 1.8s ease-in-out infinite;
+  }
+  .fancy-scroll-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .fancy-scroll-dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes dot-pulse {
+    0%, 100% { opacity: 0.25; transform: scaleX(1); }
+    50%       { opacity: 0.9;  transform: scaleX(1.4); }
+  }
+
+  /* ══════════════════════════════
+     SCENE 2 — BIRTHDAY
+  ══════════════════════════════ */
+  #scene-birthday {
+    z-index: 1;
+  }
+  .cake-wrap {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+  }
+  .cake-wrap h2 {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(44px, 14vw, 80px);
+    color: var(--cream);
+    margin-bottom: 4px;
+  }
+  .cake-wrap .age {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(14px, 4vw, 18px);
+    font-style: italic;
+    color: var(--rose-light);
+    letter-spacing: 2px;
+    margin-bottom: 32px;
+  }
+  /* SVG Cake */
+  #cake-svg { width: min(260px, 70vw); }
+  .candle-flame { transform-origin: center bottom; animation: flicker 0.4s infinite alternate ease-in-out; }
+  @keyframes flicker {
+    from { transform: scaleX(1) scaleY(1); opacity: 1; }
+    to   { transform: scaleX(0.85) scaleY(1.08); opacity: 0.85; }
+  }
+  #blow-btn {
+    display: none;
+  }
+  /* Blow UI */
+  #blow-ui {
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+  #blow-hint {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(18px, 5vw, 24px);
+    color: var(--rose-pale);
+    letter-spacing: 2px;
+    text-align: center;
+    animation: hint-pulse 2s ease-in-out infinite;
+  }
+  #blow-hint.blown {
+    animation: none;
+    color: var(--gold-light);
+    font-size: clamp(16px, 4.5vw, 20px);
+  }
+  @keyframes hint-pulse {
+    0%, 100% { opacity: 0.6; }
+    50%       { opacity: 1; }
+  }
+  #confetti-canvas {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  /* ══════════════════════════════
+     SCENE 3 — BIBLE VERSE
+  ══════════════════════════════ */
+  #scene-verse {
+    z-index: 1;
+  }
+  .verse-wrap {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 520px;
+  }
+  .verse-wrap .label {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+  .verse-wrap blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(20px, 6vw, 30px);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold-light);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+  .verse-wrap cite {
+    font-family: 'Lato', sans-serif;
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: var(--rose-light);
+    text-transform: uppercase;
+    font-style: normal;
+  }
+  /* decorative cross */
+  .deco-cross {
+    position: absolute;
+    opacity: 0.06;
+    pointer-events: none;
+  }
+
+  /* ══════════════════════════════
+     SCENE 4 — OUR STORY
+  ══════════════════════════════ */
+  #scene-story {
+    z-index: 1;
+    padding: 60px 24px;
+    justify-content: flex-start;
+    padding-top: 80px;
+  }
+  .story-header {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+  }
+  .story-header h2 {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(40px, 12vw, 64px);
+    color: var(--cream);
+  }
+  .story-header p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--rose-light);
+    margin-top: 4px;
+  }
+  .story-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 480px;
+    position: relative;
+    z-index: 2;
+  }
+  .story-card {
+    border: 1px solid rgba(201,168,76,0.25);
+    background: rgba(255,248,242,0.04);
+    backdrop-filter: blur(4px);
+    padding: 24px 22px;
+    position: relative;
+  }
+  .story-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: linear-gradient(180deg, var(--gold), var(--rose));
+  }
+  .story-card .card-num {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .story-card .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+  .story-card .card-body {
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(255,248,242,0.6);
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .placeholder-note {
+    font-size: 12px;
+    color: var(--gold);
+    opacity: 0.5;
+    font-style: italic;
+  }
+
+  /* ══════════════════════════════
+     SCENE 5 — LETTER
+  ══════════════════════════════ */
+  #scene-letter {
+    z-index: 1;
+    padding: 60px 28px;
+  }
+  .letter-wrap {
+    max-width: 480px;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+  }
+  .letter-wrap .label {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  .letter-paper {
+    background: rgba(255,248,242,0.05);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 32px 28px;
+    position: relative;
+  }
+  .letter-paper::after {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgba(201,168,76,0.08);
+    pointer-events: none;
+  }
+  .letter-greeting {
+    font-family: 'Great Vibes', cursive;
+    font-size: 32px;
+    color: var(--rose-light);
+    margin-bottom: 20px;
+  }
+  .letter-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    line-height: 1.9;
+    color: rgba(255,248,242,0.75);
+    font-style: italic;
+    white-space: pre-line;
+  }
+  .letter-sign {
+    font-family: 'Great Vibes', cursive;
+    font-size: 28px;
+    color: var(--gold-light);
+    margin-top: 24px;
+    text-align: right;
+  }
+
+  /* ══════════════════════════════
+     SCENE 6 — BLESSING
+  ══════════════════════════════ */
+  #scene-blessing {
+    z-index: 1;
+    text-align: center;
+  }
+  #blessing-content {
+    position: relative;
+    z-index: 2;
+  }
+  #blessing-content .from-tag {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  #blessing-content h2 {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(50px, 15vw, 88px);
+    color: var(--cream);
+    line-height: 1.1;
+  }
+  #blessing-content .age-line {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(18px, 5vw, 26px);
+    font-style: italic;
+    color: var(--rose-light);
+    margin: 12px 0 20px;
+    font-weight: 300;
+  }
+  #blessing-content .god-bless {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(14px, 4vw, 18px);
+    font-style: italic;
+    color: var(--gold-light);
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+  #blessing-content .rose-emoji {
+    font-size: 48px;
+    display: block;
+    margin-top: 28px;
+    animation: heartbeat 1.6s infinite ease-in-out;
+  }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.12); }
+  }
+  #particles-canvas {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ── REVEAL ANIMATION ── */
+  .reveal { opacity: 0; transform: translateY(30px); }
+</style>
+</head>
+<body>
+
+<!-- Stars parallax layer -->
+<canvas id="stars-canvas"></canvas>
+
+<!-- ══════════════════════════════
+     SCENE 1 — OPENING
+══════════════════════════════ -->
+<section id="scene-opening">
+  <svg class="bg-cross" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="42" y="5" width="16" height="90" fill="white"/>
+    <rect x="5" y="35" width="90" height="16" fill="white"/>
+  </svg>
+
+  <div id="opening-content">
+    <p class="from-tag">From Nish, with love</p>
+    <h1>Rachel</h1>
+    <div class="gold-line"></div>
+    <p class="subtitle">A birthday gift, just for you</p>
+  </div>
+
+  <div class="fancy-scroll">
+    <svg class="fancy-scroll-arrow" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="20" r="19" stroke="url(#goldRing)" stroke-width="1"/>
+      <path d="M13 17 L20 24 L27 17" stroke="url(#goldArrow)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <defs>
+        <linearGradient id="goldRing" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#E8CF8A"/>
+          <stop offset="50%" stop-color="#C9A84C"/>
+          <stop offset="100%" stop-color="#E8CF8A"/>
+        </linearGradient>
+        <linearGradient id="goldArrow" x1="13" y1="17" x2="27" y2="24" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#FFF8F2"/>
+          <stop offset="100%" stop-color="#E8CF8A"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     SCENE 2 — BIRTHDAY
+══════════════════════════════ -->
+<section id="scene-birthday">
+  <canvas id="confetti-canvas"></canvas>
+  <div class="cake-wrap reveal">
+    <h2>Happy Birthday</h2>
+    <p class="age">26 years of being wonderful</p>
+
+    <svg id="cake-svg" viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+      <!-- Plate -->
+      <ellipse cx="100" cy="158" rx="80" ry="10" fill="#C9A84C" opacity="0.3"/>
+      <!-- Cake base tier -->
+      <rect x="28" y="110" width="144" height="50" rx="6" fill="#C8637A"/>
+      <rect x="28" y="108" width="144" height="10" rx="3" fill="#E8A0B0"/>
+      <!-- Frosting drips -->
+      <path d="M40,118 Q46,128 52,118 Q58,128 64,118 Q70,128 76,118 Q82,128 88,118 Q94,128 100,118 Q106,128 112,118 Q118,128 124,118 Q130,128 136,118 Q142,128 148,118 Q154,128 160,118" stroke="#FFF8F2" stroke-width="3" fill="none" opacity="0.5"/>
+      <!-- Top tier -->
+      <rect x="52" y="72" width="96" height="40" rx="6" fill="#A84D62"/>
+      <rect x="52" y="70" width="96" height="10" rx="3" fill="#E8A0B0"/>
+      <!-- Top frosting -->
+      <path d="M60,80 Q66,90 72,80 Q78,90 84,80 Q90,90 96,80 Q102,90 108,80 Q114,90 120,80 Q126,90 132,80 Q138,90 144,80" stroke="#FFF8F2" stroke-width="2.5" fill="none" opacity="0.5"/>
+      <!-- Decoration dots -->
+      <circle cx="60" cy="135" r="4" fill="#E8CF8A" opacity="0.7"/>
+      <circle cx="100" cy="135" r="4" fill="#E8CF8A" opacity="0.7"/>
+      <circle cx="140" cy="135" r="4" fill="#E8CF8A" opacity="0.7"/>
+      <circle cx="80" cy="95" r="3" fill="#E8CF8A" opacity="0.7"/>
+      <circle cx="120" cy="95" r="3" fill="#E8CF8A" opacity="0.7"/>
+      <!-- Cross decoration on cake -->
+      <rect x="96" y="78" width="8" height="26" rx="2" fill="#E8CF8A" opacity="0.4"/>
+      <rect x="88" y="86" width="24" height="8" rx="2" fill="#E8CF8A" opacity="0.4"/>
+      <!-- Candle -->
+      <rect x="94" y="42" width="12" height="32" rx="3" fill="#E8A0B0"/>
+      <rect x="94" y="40" width="12" height="8" rx="2" fill="#C8637A" opacity="0.6"/>
+      <!-- Wick -->
+      <line x1="100" y1="32" x2="100" y2="42" stroke="#3D2028" stroke-width="1.5"/>
+      <!-- Flame -->
+      <g class="candle-flame" id="flame-group">
+        <ellipse cx="100" cy="26" rx="6" ry="10" fill="#FFD166" opacity="0.9"/>
+        <ellipse cx="100" cy="28" rx="4" ry="7" fill="#FF9F1C" opacity="0.8"/>
+        <ellipse cx="100" cy="30" rx="2" ry="4" fill="white" opacity="0.6"/>
+      </g>
+    </svg>
+
+    <br>
+    <div id="blow-ui">
+      <p id="blow-hint">💨 Blow the candle!</p>
+      <div id="blow-meter-wrap"><div id="blow-meter-bar"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     SCENE 3 — BIBLE VERSE
+══════════════════════════════ -->
+<section id="scene-verse">
+  <svg class="deco-cross" width="400" height="400" viewBox="0 0 100 100" fill="none" style="top:-60px;right:-80px;">
+    <rect x="42" y="5" width="16" height="90" fill="white"/>
+    <rect x="5" y="35" width="90" height="16" fill="white"/>
+  </svg>
+
+  <div class="verse-wrap reveal">
+    <p class="label">✦ A Word for You ✦</p>
+    <div class="gold-line"></div>
+    <blockquote>
+      "For I know the plans I have for you,"
+      declares the Lord,
+      "plans to prosper you and not to harm you,
+      plans to give you hope and a future."
+    </blockquote>
+    <div class="gold-line"></div>
+    <cite>Jeremiah 29:11</cite>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     SCENE 4 — OUR STORY
+══════════════════════════════ -->
+<section id="scene-story">
+  <div class="story-header reveal">
+    <h2>Our Story</h2>
+    <p>moments that matter</p>
+  </div>
+
+  <div class="story-cards">
+    <div class="story-card reveal">
+      <p class="card-num">Chapter 01</p>
+      <p class="card-title">The Beginning</p>
+      <p class="card-body placeholder-note">[✏️ Write your story here — how you met, your first moment together...]</p>
+    </div>
+    <div class="story-card reveal">
+      <p class="card-num">Chapter 02</p>
+      <p class="card-title">A Day to Remember</p>
+      <p class="card-body placeholder-note">[✏️ A favourite memory or adventure you shared together...]</p>
+    </div>
+    <div class="story-card reveal">
+      <p class="card-num">Chapter 03</p>
+      <p class="card-title">Yokohama, Together</p>
+      <p class="card-body placeholder-note">[✏️ Life in Yokohama — a small moment, a favourite spot, or a daily ritual...]</p>
+    </div>
+    <div class="story-card reveal">
+      <p class="card-num">Chapter 04</p>
+      <p class="card-title">Looking Forward</p>
+      <p class="card-body placeholder-note">[✏️ Your hopes and dreams for the future together...]</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     SCENE 5 — LETTER
+══════════════════════════════ -->
+<section id="scene-letter">
+  <div class="letter-wrap reveal">
+    <p class="label">✦ A Letter from Nish ✦</p>
+
+    <div class="letter-paper">
+      <p class="letter-greeting">My dearest Rachel,</p>
+      <p class="letter-body">[✏️ Write your letter here. Tell Rachel what she means to you, what you love about her, and your prayer for her on this birthday. This is your space to speak from the heart.]
+
+
+</p>
+      <p class="letter-sign">Forever yours,<br>Nish 🌹</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     SCENE 6 — BLESSING
+══════════════════════════════ -->
+<section id="scene-blessing">
+  <canvas id="particles-canvas" style="opacity:0;"></canvas>
+
+  <div id="blessing-content" class="reveal">
+    <p class="from-tag">With love & prayer</p>
+    <h2>Happy 26th,<br>Rachel</h2>
+    <p class="age-line">April 11, 2026</p>
+    <div class="gold-line"></div>
+    <p class="god-bless">May God bless every day of your 26th year.</p>
+    <span class="rose-emoji">🌹</span>
+  </div>
+</section>
+
+<script>
+/* ════════════════════════════════════
+   STARS + PARALLAX (DeviceOrientation)
+════════════════════════════════════ */
+const starsCanvas = document.getElementById('stars-canvas');
+const sCtx = starsCanvas.getContext('2d');
+let starsW, starsH, stars = [];
+let tiltX = 0, tiltY = 0;
+let targetTiltX = 0, targetTiltY = 0;
+
+function resizeStars() {
+  starsW = starsCanvas.width = window.innerWidth;
+  starsH = starsCanvas.height = window.innerHeight;
+  starsCanvas.style.width = window.innerWidth + 'px';
+  starsCanvas.style.height = window.innerHeight + 'px';
+}
+resizeStars();
+window.addEventListener('resize', resizeStars);
+
+function initStars() {
+  stars = [];
+  for (let i = 0; i < 160; i++) {
+    stars.push({
+      x: Math.random(), y: Math.random(),
+      r: Math.random() * 1.5 + 0.3,
+      speed: Math.random() * 0.3 + 0.1,
+      layer: Math.random() * 3 + 1
+    });
+  }
+}
+initStars();
+
+function drawStars() {
+  sCtx.clearRect(0, 0, starsW, starsH);
+  stars.forEach(s => {
+    const px = (s.x * starsW + tiltX * s.layer * 8) % starsW;
+    const py = (s.y * starsH + tiltY * s.layer * 8) % starsH;
+    const alpha = 0.3 + 0.5 * (s.r / 1.8);
+    sCtx.beginPath();
+    sCtx.arc(
+      (px + starsW) % starsW,
+      (py + starsH) % starsH,
+      s.r, 0, Math.PI * 2
+    );
+    // Mix gold and rose for stars
+    const gold = `rgba(232,207,138,${alpha})`;
+    const rose = `rgba(232,160,176,${alpha * 0.6})`;
+    sCtx.fillStyle = s.layer > 2 ? rose : gold;
+    sCtx.fill();
+  });
+  tiltX += (targetTiltX - tiltX) * 0.05;
+  tiltY += (targetTiltY - tiltY) * 0.05;
+  requestAnimationFrame(drawStars);
+}
+drawStars();
+
+// iOS DeviceOrientation permission
+function requestOrientationPermission() {
+  if (typeof DeviceOrientationEvent !== 'undefined' &&
+      typeof DeviceOrientationEvent.requestPermission === 'function') {
+    DeviceOrientationEvent.requestPermission().then(r => {
+      if (r === 'granted') listenOrientation();
+    }).catch(() => {});
+  } else {
+    listenOrientation();
+  }
+}
+
+function listenOrientation() {
+  window.addEventListener('deviceorientation', (e) => {
+    targetTiltX = (e.gamma || 0) / 30;
+    targetTiltY = (e.beta  || 0) / 30 - 0.5;
+  });
+}
+
+/* ════════════════════════════════════
+   BGM — Hymn-style Happy Birthday
+   Using Tone.js
+════════════════════════════════════ */
+let bgmStarted = false;
+
+async function startBGM() {
+  if (bgmStarted) return;
+  bgmStarted = true;
+  await Tone.start();
+
+  const reverb = new Tone.Reverb({ decay: 4, wet: 0.6 }).toDestination();
+  const chorus = new Tone.Chorus(2, 2.5, 0.5).connect(reverb).start();
+
+  const synth = new Tone.PolySynth(Tone.Synth, {
+    oscillator: { type: 'triangle' },
+    envelope: { attack: 0.08, decay: 0.2, sustain: 0.6, release: 1.2 },
+    volume: -12
+  }).connect(chorus);
+
+  // Pad underneath
+  const pad = new Tone.PolySynth(Tone.Synth, {
+    oscillator: { type: 'sine' },
+    envelope: { attack: 0.8, decay: 0.5, sustain: 0.8, release: 2 },
+    volume: -22
+  }).connect(reverb);
+
+  // Happy Birthday in C major — hymn-like, slower
+  const bpm = 66;
+  Tone.getTransport().bpm.value = bpm;
+
+  // Notes: Happy Birthday melody
+  const melody = [
+    ['C4','8n'], ['C4','8n'],
+    ['D4','4n'], ['C4','4n'], ['F4','4n'], ['E4','2n'],
+    ['C4','8n'], ['C4','8n'],
+    ['D4','4n'], ['C4','4n'], ['G4','4n'], ['F4','2n'],
+    ['C4','8n'], ['C4','8n'],
+    ['C5','4n'], ['A4','4n'], ['F4','4n'], ['E4','4n'], ['D4','2n'],
+    ['A#4','8n'], ['A#4','8n'],
+    ['A4','4n'], ['F4','4n'], ['G4','4n'], ['F4','2n.'],
+  ];
+
+  const chords = [
+    [['C3','E3','G3'], '1n'],
+    [['F3','A3','C4'], '1n'],
+    [['C3','E3','G3'], '1n'],
+    [['G3','B3','D4'], '1n'],
+    [['C3','E3','G3'], '1n'],
+    [['F3','A3','C4'], '1n'],
+    [['G3','B3','D4'], '1n'],
+  ];
+
+  // Schedule melody
+  let time = Tone.now() + 0.5;
+  const beatSec = 60 / bpm;
+  const durMap = { '8n': beatSec/2, '4n': beatSec, '2n': beatSec*2, '2n.': beatSec*3, '1n': beatSec*4 };
+
+  melody.forEach(([note, dur]) => {
+    synth.triggerAttackRelease(note, durMap[dur] * 0.85, time);
+    time += durMap[dur];
+  });
+
+  // Schedule pads (looping)
+  let padTime = Tone.now() + 0.5;
+  chords.forEach(([notes, dur]) => {
+    pad.triggerAttackRelease(notes, durMap[dur] * 0.9, padTime);
+    padTime += durMap[dur];
+  });
+}
+
+/* ════════════════════════════════════
+   START EXPERIENCE — triggered by first scroll
+════════════════════════════════════ */
+let experienceStarted = false;
+function startExperience() {
+  if (experienceStarted) return;
+  experienceStarted = true;
+  startBGM();
+  requestOrientationPermission();
+}
+
+// Fire as soon as user scrolls at all
+function onFirstScroll() {
+  const scrollY = window.scrollY || window.pageYOffset;
+  if (scrollY > 1) {
+    startExperience();
+    window.removeEventListener('scroll', onFirstScroll);
+  }
+}
+window.addEventListener('scroll', onFirstScroll, { passive: true });
+
+// Auto-start mic when birthday scene comes into view
+const micObserver = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting) {
+    startBlowDetection();
+    micObserver.disconnect();
+  }
+}, { threshold: 0.4 });
+micObserver.observe(document.getElementById('scene-birthday'));
+
+/* ════════════════════════════════════
+   BLOW DETECTION via Microphone (auto-start)
+════════════════════════════════════ */
+let candlesBlown = false;
+let micStream = null;
+let micAnalyser = null;
+let blowRAF = null;
+
+async function startBlowDetection() {
+  if (candlesBlown) return;
+  if (micStream) return; // already running
+
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    micStream = stream;
+
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const source = audioCtx.createMediaStreamSource(stream);
+    micAnalyser = audioCtx.createAnalyser();
+    micAnalyser.fftSize = 256;
+    micAnalyser.smoothingTimeConstant = 0.3;
+    source.connect(micAnalyser);
+
+    const dataArr = new Uint8Array(micAnalyser.frequencyBinCount);
+    let highStart = null;
+    const THRESHOLD = 55;
+    const SUSTAIN_MS = 250;
+
+    function detectBlow() {
+      if (candlesBlown) return;
+      micAnalyser.getByteTimeDomainData(dataArr);
+      let sum = 0;
+      for (let i = 0; i < dataArr.length; i++) {
+        const v = (dataArr[i] - 128) / 128;
+        sum += v * v;
+      }
+      const rms = Math.sqrt(sum / dataArr.length) * 255;
+
+      if (rms > THRESHOLD) {
+        if (!highStart) highStart = Date.now();
+        // Flicker flame with wind
+        const scale = 1 + (rms / 255) * 0.5;
+        document.getElementById('flame-group').style.transform =
+          `scaleX(${scale}) skewX(${(Math.random()-0.5)*15}deg)`;
+        if (Date.now() - highStart > SUSTAIN_MS) {
+          stopMic();
+          blowCandles();
+          return;
+        }
+      } else {
+        highStart = null;
+        document.getElementById('flame-group').style.transform = '';
+      }
+      blowRAF = requestAnimationFrame(detectBlow);
+    }
+    detectBlow();
+
+  } catch (err) {
+    // Mic unavailable — tap hint as fallback
+    const hint = document.getElementById('blow-hint');
+    hint.textContent = '🎂 Tap here to blow!';
+    hint.style.cursor = 'pointer';
+    hint.onclick = blowCandles;
+  }
+}
+
+function stopMic() {
+  if (blowRAF) cancelAnimationFrame(blowRAF);
+  if (micStream) { micStream.getTracks().forEach(t => t.stop()); micStream = null; }
+}
+
+function blowCandles() {
+  if (candlesBlown) return;
+  candlesBlown = true;
+  stopMic();
+
+  document.getElementById('blow-meter-wrap').style.display = 'none';
+  const hint = document.getElementById('blow-hint');
+  hint.classList.add('blown');
+  hint.textContent = '🎉 Happy Birthday, Rachel!';
+  hint.style.cursor = 'default';
+  hint.onclick = null;
+
+  // Flame dies
+  anime({
+    targets: '#flame-group',
+    scaleX: [1, 1.8, 0.2, 0],
+    scaleY: [1, 1.4, 0.6, 0],
+    opacity: [1, 0.8, 0.4, 0],
+    duration: 700,
+    easing: 'easeInQuad',
+    complete: () => { document.getElementById('flame-group').style.display = 'none'; }
+  });
+
+  // Fullscreen confetti
+  launchConfetti();
+}
+
+function launchConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+
+  // Make fullscreen fixed
+  canvas.style.position = 'fixed';
+  canvas.style.inset = '0';
+  canvas.style.width = '100vw';
+  canvas.style.height = '100vh';
+  canvas.style.pointerEvents = 'none';
+  canvas.style.zIndex = '999';
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const pieces = [];
+  const colors = ['#C8637A','#E8A0B0','#C9A84C','#E8CF8A','#FFF8F2','#A84D62','#f0c0cc','#ffe8a0'];
+
+  // Burst from multiple points across the top
+  const origins = [0.2, 0.5, 0.8];
+  origins.forEach(ox => {
+    for (let i = 0; i < 80; i++) {
+      pieces.push({
+        x: canvas.width * ox,
+        y: canvas.height * 0.35,
+        vx: (Math.random() - 0.5) * 16,
+        vy: Math.random() * -18 - 6,
+        w: Math.random() * 10 + 4,
+        h: Math.random() * 5 + 2,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        rot: Math.random() * 360,
+        rotV: (Math.random() - 0.5) * 10,
+        alpha: 1
+      });
+    }
+  });
+
+  function animConfetti() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let alive = false;
+    pieces.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      p.vy += 0.4; p.vx *= 0.99;
+      p.rot += p.rotV;
+      p.alpha -= 0.006;
+      if (p.alpha > 0) {
+        alive = true;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot * Math.PI / 180);
+        ctx.globalAlpha = Math.max(0, p.alpha);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+        ctx.restore();
+      }
+    });
+    if (alive) requestAnimationFrame(animConfetti);
+    else { ctx.clearRect(0, 0, canvas.width, canvas.height); canvas.style.zIndex = ''; }
+  }
+  animConfetti();
+}
+
+/* ════════════════════════════════════
+   BLESSING PARTICLES — fullscreen fixed
+════════════════════════════════════ */
+function startBlessingParticles() {
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+
+  // Make it cover the whole viewport, fixed
+  canvas.style.position = 'fixed';
+  canvas.style.inset = '0';
+  canvas.style.width = '100vw';
+  canvas.style.height = '100vh';
+  canvas.style.pointerEvents = 'none';
+  canvas.style.zIndex = '0';
+  canvas.style.transition = 'opacity 0.8s ease';
+
+  // Show/hide based on whether blessing scene is in view
+  const blessingSection = document.getElementById('scene-blessing');
+  const visibilityWatcher = new IntersectionObserver((entries) => {
+    canvas.style.opacity = entries[0].isIntersecting ? '1' : '0';
+  }, { threshold: 0.1 });
+  visibilityWatcher.observe(blessingSection);
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const particles = [];
+  const colors = ['#C9A84C','#E8CF8A','#C8637A','#E8A0B0','#FFF8F2','#f0c0cc','#ffe8a0'];
+
+  // Mix of dots, sparkle crosses, and tiny diamonds
+  for (let i = 0; i < 200; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height + canvas.height * 0.5,
+      vx: (Math.random() - 0.5) * 1.2,
+      vy: -(Math.random() * 1.8 + 0.5),
+      r: Math.random() * 3.5 + 0.8,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      alpha: Math.random() * 0.8 + 0.2,
+      type: Math.random() < 0.4 ? 'cross' : 'circle', // sparkle or dot
+      spin: Math.random() * Math.PI * 2,
+      spinV: (Math.random() - 0.5) * 0.08,
+      twinkle: Math.random() * Math.PI * 2,
+    });
+  }
+
+  function drawCross(ctx, x, y, r, alpha, spin, color) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(spin);
+    ctx.globalAlpha = alpha;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = r * 0.5;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(-r, 0); ctx.lineTo(r, 0);
+    ctx.moveTo(0, -r); ctx.lineTo(0, r);
+    // diagonal arms (smaller)
+    const d = r * 0.65;
+    ctx.moveTo(-d, -d); ctx.lineTo(d, d);
+    ctx.moveTo(d, -d); ctx.lineTo(-d, d);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function animParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.spin += p.spinV;
+      p.twinkle += 0.06;
+      // wrap around screen
+      if (p.y < -20) {
+        p.y = canvas.height + 20;
+        p.x = Math.random() * canvas.width;
+      }
+      if (p.x < -20) p.x = canvas.width + 20;
+      if (p.x > canvas.width + 20) p.x = -20;
+
+      const twinkleAlpha = p.alpha * (0.6 + 0.4 * Math.sin(p.twinkle));
+
+      if (p.type === 'cross') {
+        drawCross(ctx, p.x, p.y, p.r * 2.5, twinkleAlpha, p.spin, p.color);
+      } else {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.globalAlpha = twinkleAlpha;
+        ctx.fillStyle = p.color;
+        ctx.fill();
+      }
+    });
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(animParticles);
+  }
+  animParticles();
+}
+
+/* ════════════════════════════════════
+   SECTION FADE-IN ON SCROLL
+   — section appears only after user has
+     scrolled a meaningful distance past
+     the previous section's bottom edge
+════════════════════════════════════ */
+const sections = Array.from(document.querySelectorAll('section:not(#scene-opening)'));
+
+// How many px past the section top before it fades in
+const SCROLL_DELAY_PX = 180;
+
+function checkSectionVisibility() {
+  const scrollY = window.scrollY || window.pageYOffset;
+  const winH = window.innerHeight;
+
+  sections.forEach(sec => {
+    if (sec.classList.contains('scene-visible')) return;
+    const rect = sec.getBoundingClientRect();
+    // Trigger when section top has scrolled SCROLL_DELAY_PX below viewport top
+    // i.e. user has scrolled at least that far into the section
+    if (rect.top < winH - SCROLL_DELAY_PX) {
+      sec.classList.add('scene-visible');
+    }
+  });
+}
+
+window.addEventListener('scroll', checkSectionVisibility, { passive: true });
+checkSectionVisibility(); // run once on load
+
+/* ── inner .reveal elements animate after section is visible ── */
+const revealEls = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      // small delay so section CSS transition finishes first
+      setTimeout(() => {
+        anime({
+          targets: el,
+          opacity: [0, 1],
+          translateY: [30, 0],
+          duration: 900,
+          easing: 'easeOutCubic',
+        });
+      }, 400);
+      revealObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.12 });
+
+revealEls.forEach(el => revealObserver.observe(el));
+
+// Open content fade-in on load
+anime({
+  targets: '#opening-content',
+  opacity: [0, 1],
+  translateY: [40, 0],
+  duration: 1400,
+  easing: 'easeOutExpo',
+  delay: 400
+});
+
+// Trigger blessing particles — show only when scene-blessing is visible
+const blessingObserver = new IntersectionObserver((entries) => {
+  const canvas = document.getElementById('particles-canvas');
+  if (entries[0].isIntersecting) {
+    canvas.style.opacity = '1';
+    startBlessingParticles();
+    blessingObserver.disconnect();
+  }
+}, { threshold: 0.2 });
+blessingObserver.observe(document.getElementById('scene-blessing'));
+
+// Canvas resize on orientation change
+window.addEventListener('orientationchange', () => {
+  setTimeout(() => {
+    const cc = document.getElementById('confetti-canvas');
+    if (cc) { cc.width = cc.offsetWidth; cc.height = cc.offsetHeight; }
+  }, 300);
+});
+</script>
+</body>
+</html>
