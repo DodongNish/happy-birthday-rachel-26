@@ -939,7 +939,7 @@ async function startBGM() {
   const synth = new Tone.PolySynth(Tone.Synth, {
     oscillator: { type: 'triangle' },
     envelope: { attack: 0.08, decay: 0.2, sustain: 0.6, release: 1.2 },
-    volume: -12
+    volume: -16
   }).connect(chorus);
 
   // Pad underneath
