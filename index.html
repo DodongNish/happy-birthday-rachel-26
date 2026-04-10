@@ -112,14 +112,14 @@
     letter-spacing: 4px;
     text-transform: uppercase;
     color: var(--gold);
-    margin-bottom: 20px;
+    margin-bottom: 24px;
   }
   #opening-content h1 {
     font-family: 'Great Vibes', cursive;
     font-size: clamp(60px, 18vw, 96px);
     color: var(--cream);
     line-height: 1;
-    margin-bottom: 8px;
+    margin-bottom: 0px;
   }
   #opening-content .subtitle {
     font-family: 'Cormorant Garamond', serif;
@@ -129,10 +129,20 @@
     font-weight: 300;
     letter-spacing: 1px;
   }
+  #opening-content .subtitle-2 {
+    margin-top: 16px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(14px, 4vw, 20px);
+    font-style: italic;
+    color: var(--rose-pale);
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
   .gold-line {
-    width: 60px; height: 1px;
+    width: 170px;
+    height: 2px;
     background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    margin: 20px auto;
+    margin: 4px auto 20px;
   }
   /* start-btn removed */
 
@@ -687,6 +697,8 @@ body.locked {
     <h1>Rachel</h1>
     <div class="gold-line"></div>
     <p class="subtitle">A birthday gift, just for you</p>
+    <p class="subtitle-2">Made with love,</p>
+    <p class="subtitle-2">(and a bit of HTML, CSS, and Javascript.)</p>
     <button id="start-btn" @>Start</button>
   </div>
 
@@ -929,7 +941,7 @@ function listenOrientation() {
 
 /* ════════════════════════════════════
    BGM — Hymn-style Happy Birthday
-   Using Tone.js
+   Using Tone.js (2回繰り返し版)
 ════════════════════════════════════ */
 let bgmStarted = false;
 
@@ -947,55 +959,55 @@ async function startBGM() {
     volume: -18
   }).connect(chorus);
 
-  // Pad underneath
   const pad = new Tone.PolySynth(Tone.Synth, {
     oscillator: { type: 'sine' },
     envelope: { attack: 0.8, decay: 0.5, sustain: 0.8, release: 2 },
     volume: -22
   }).connect(reverb);
 
-  // Happy Birthday in C major — hymn-like, slower
   const bpm = 66;
   Tone.getTransport().bpm.value = bpm;
 
-  // Notes: Happy Birthday melody
   const melody = [
-    ['C4','8n'], ['C4','8n'],
-    ['D4','4n'], ['C4','4n'], ['F4','4n'], ['E4','2n'],
-    ['C4','8n'], ['C4','8n'],
-    ['D4','4n'], ['C4','4n'], ['G4','4n'], ['F4','2n'],
-    ['C4','8n'], ['C4','8n'],
-    ['C5','4n'], ['A4','4n'], ['F4','4n'], ['E4','4n'], ['D4','2n'],
-    ['A#4','8n'], ['A#4','8n'],
-    ['A4','4n'], ['F4','4n'], ['G4','4n'], ['F4','2n.'],
+    ['C4','8n'], ['C4','8n'], ['D4','4n'], ['C4','4n'], ['F4','4n'], ['E4','2n'],
+    ['C4','8n'], ['C4','8n'], ['D4','4n'], ['C4','4n'], ['G4','4n'], ['F4','2n'],
+    ['C4','8n'], ['C4','8n'], ['C5','4n'], ['A4','4n'], ['F4','4n'], ['E4','4n'], ['D4','2n'],
+    ['A#4','8n'], ['A#4','8n'], ['A4','4n'], ['F4','4n'], ['G4','4n'], ['F4','2n.']
   ];
 
   const chords = [
-    [['C3','E3','G3'], '1n'],
-    [['F3','A3','C4'], '1n'],
-    [['C3','E3','G3'], '1n'],
-    [['G3','B3','D4'], '1n'],
-    [['C3','E3','G3'], '1n'],
-    [['F3','A3','C4'], '1n'],
-    [['G3','B3','D4'], '1n'],
+    [['C3','E3','G3'], '1n'], [['F3','A3','C4'], '1n'], [['C3','E3','G3'], '1n'],
+    [['G3','B3','D4'], '1n'], [['C3','E3','G3'], '1n'], [['F3','A3','C4'], '1n'],
+    [['G3','B3','D4'], '1n']
   ];
 
-  // Schedule melody
-  let time = Tone.now() + 0.5;
   const beatSec = 60 / bpm;
-  const durMap = { '8n': beatSec/2, '4n': beatSec, '2n': beatSec*2, '2n.': beatSec*3, '1n': beatSec*4 };
+  const durMap = { 
+    '8n': beatSec/2, '4n': beatSec, '2n': beatSec*2, '2n.': beatSec*3, '1n': beatSec*4 
+  };
 
-  melody.forEach(([note, dur]) => {
-    synth.triggerAttackRelease(note, durMap[dur] * 0.85, time);
-    time += durMap[dur];
-  });
+  // メロディ全体の長さを計算（2回目の開始タイミング用）
+  const totalDuration = melody.reduce((acc, [_, dur]) => acc + durMap[dur], 0);
 
-  // Schedule pads (looping)
-  let padTime = Tone.now() + 0.5;
-  chords.forEach(([notes, dur]) => {
-    pad.triggerAttackRelease(notes, durMap[dur] * 0.9, padTime);
-    padTime += durMap[dur];
-  });
+  // 1回分の演奏をスケジュールする関数
+  const playOnce = (startTime) => {
+    let mTime = startTime;
+    melody.forEach(([note, dur]) => {
+      synth.triggerAttackRelease(note, durMap[dur] * 0.85, mTime);
+      mTime += durMap[dur];
+    });
+
+    let pTime = startTime;
+    chords.forEach(([notes, dur]) => {
+      pad.triggerAttackRelease(notes, durMap[dur] * 0.9, pTime);
+      pTime += durMap[dur];
+    });
+  };
+
+  // 実行
+  const now = Tone.now() + 0.5;
+  playOnce(now);                 // 1回目
+  playOnce(now + totalDuration); // 2回目
 }
 
 /* ════════════════════════════════════
@@ -1066,8 +1078,6 @@ startBtn.addEventListener('click', async () => {
 
   }
 });
-
-/* ── 既存の onFirstScroll は削除 ── */
 
 
 // Auto-start mic when birthday scene comes into view
