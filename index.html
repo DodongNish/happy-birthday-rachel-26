@@ -1033,6 +1033,14 @@ startBtn.addEventListener('click', async () => {
     // 一旦ストリームを保持するか、一度閉じて後で再開できるようにする
     window.preAuthorizedStream = stream;
 
+      
+
+    console.log("All systems initialized: BGM, Mic, and Orientation");
+  } catch (err) {
+    console.warn("User denied mic or audio failed:", err);
+    // マイクが拒否されても体験を続けられるようエラーは握りつぶしすぎない
+  }
+
     // 2. ジャイロセンサー（星の揺れ）の許可 (iOS用)
     requestOrientationPermission();
 
@@ -1040,13 +1048,6 @@ startBtn.addEventListener('click', async () => {
     // ブラウザの保護を解除するためにクリックイベント内で必須
     await Tone.start();
     startBGM(); 
-      
-
-    console.log("All systems initialized: BGM, Mic, and Orientation");
-  } catch (err) {
-    console.warn("User denied mic or audio failed:", err);
-    // マイクが拒否されても体験を続けられるようエラーは握りつぶしすぎない
-  }finally {
 
     // 次のシーン（誕生日シーン）までゆっくりスクロール
     const nextSection = document.getElementById('scene-birthday');
@@ -1076,7 +1077,6 @@ startBtn.addEventListener('click', async () => {
         resolve();
     }, 5000)); 
 
-  }
 });
 
 
@@ -1185,9 +1185,10 @@ function detectBlow() {
     console.error("Mic detection error:", err);
     // 失敗した時のフォールバック：クリックで消せるようにする
     const hint = document.getElementById('blow-hint');
+    const cake = document.getElementById('cake-svg');
     if (hint) {
       hint.textContent = '🎂 Tap the cake to blow!';
-      hint.onclick = blowCandles;
+      cake.onclick = blowCandles;
     }
   }
 }
