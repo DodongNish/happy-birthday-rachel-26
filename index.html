@@ -658,11 +658,16 @@
 
   /* ── REVEAL ANIMATION ── */
   .reveal { opacity: 0; transform: translateY(30px); }
-  
+
+  /* 初期状態：スクロール禁止 */
+body.locked {
+  overflow: hidden;
+  height: 100vh;
+}
   
 </style>
 </head>
-<body>
+<body class="locked">
 
 <!-- Stars parallax layer -->
 <canvas id="stars-canvas"></canvas>
@@ -1003,7 +1008,9 @@ let experienceStarted = false;
 startBtn.addEventListener('click', async () => {
   if (experienceStarted) return;
   experienceStarted = true;
-
+    
+  // --- スクロールロックの解除 ---
+  document.body.classList.remove('locked');
 
   try {
     // 2. Tone.js (BGM) の開始
