@@ -1011,6 +1011,7 @@ startBtn.addEventListener('click', async () => {
     
   // --- スクロールロックの解除 ---
   document.body.classList.remove('locked');
+    
 
   try {
 
@@ -1054,7 +1055,15 @@ startBtn.addEventListener('click', async () => {
             startBlowDetection();
           }
         });
+
+                
     }, 800);
+      
+    await new Promise(resolve => setTimeout(()=> {
+        document.getElementById('start-btn').style.display = 'none'; // ボタンを消す
+        resolve();
+    }, 5000)); 
+
   }
 });
 
