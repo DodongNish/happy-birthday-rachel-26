@@ -217,15 +217,22 @@
     align-items: center;
     gap: 14px;
   }
-  #blow-hint {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: clamp(18px, 5vw, 24px);
-    color: var(--rose-pale);
-    letter-spacing: 2px;
-    text-align: center;
-    animation: hint-pulse 2s ease-in-out infinite;
-  }
+#blow-hint {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(22px, 6vw, 24px);
+  color: var(--rose-pale);
+  letter-spacing: 2px;
+  text-align: center;
+  
+  /* ほのかな光彩を追加して、背景の星に埋もれないようにする */
+  text-shadow: 0 0 10px rgba(232, 160, 176, 0.4); 
+  
+  /* 大文字を混ぜる、あるいは先頭だけ少し大きく見せる */
+  text-transform: capitalize; 
+  
+  animation: hint-pulse 2s ease-in-out infinite;
+}
   #blow-hint.blown {
     animation: none;
     color: var(--gold-light);
@@ -475,9 +482,80 @@
     pointer-events: none;
     z-index: 1;
   }
+  
+
+  #start-btn {
+  margin-top: 2rem;
+  padding: 12px 40px;
+  background: transparent;
+  border: 1px solid rgba(232, 207, 138, 0.6);
+  color: #E8CF8A;
+  font-family: serif; /* もしCinzelなどがあればそれを指定 */
+  font-size: 0.9rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+#start-btn:hover {
+  background: rgba(232, 207, 138, 0.1);
+  border-color: #E8CF8A;
+  box-shadow: 0 0 20px rgba(232, 207, 138, 0.2);
+  transform: translateY(-2px);
+}
+
+#start-btn:active {
+  transform: translateY(0);
+}
+
+#blow-ui {
+  margin-top: 20px;
+  text-align: center;
+  width: 100%;
+  max-width: 250px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+#blow-meter-wrap {
+  position: relative;
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 248, 242, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  border: 0.5px solid rgba(232, 207, 138, 0.3);
+}
+
+#blow-meter-bar {
+  width: 0%; /* JSでここを動かす */
+  height: 100%;
+  background: linear-gradient(90deg, #C9A84C, #E8CF8A, #FFF8F2);
+  box-shadow: 0 0 10px rgba(232, 207, 138, 0.6);
+  transition: width 0.1s ease-out; /* 動きを滑らかに */
+}
+
+
+/* 消した後のアニメーション用クラス */
+.blown {
+  color: #FFF8F2 !important;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  animation: celebrate 1s infinite alternate;
+}
+
+@keyframes celebrate {
+  from { transform: scale(1); }
+  to { transform: scale(1.1); }
+}
 
   /* ── REVEAL ANIMATION ── */
   .reveal { opacity: 0; transform: translateY(30px); }
+  
+  
 </style>
 </head>
 <body>
@@ -486,6 +564,7 @@
 <canvas id="stars-canvas"></canvas>
 
 <!-- ══════════════════════════════
+
      SCENE 1 — OPENING
 ══════════════════════════════ -->
 <section id="scene-opening">
@@ -499,25 +578,10 @@
     <h1>Rachel</h1>
     <div class="gold-line"></div>
     <p class="subtitle">A birthday gift, just for you</p>
+    <button id="start-btn" @>Start</button>
   </div>
 
-  <div class="fancy-scroll">
-    <svg class="fancy-scroll-arrow" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="20" cy="20" r="19" stroke="url(#goldRing)" stroke-width="1"/>
-      <path d="M13 17 L20 24 L27 17" stroke="url(#goldArrow)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <defs>
-        <linearGradient id="goldRing" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#E8CF8A"/>
-          <stop offset="50%" stop-color="#C9A84C"/>
-          <stop offset="100%" stop-color="#E8CF8A"/>
-        </linearGradient>
-        <linearGradient id="goldArrow" x1="13" y1="17" x2="27" y2="24" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#FFF8F2"/>
-          <stop offset="100%" stop-color="#E8CF8A"/>
-        </linearGradient>
-      </defs>
-    </svg>
-  </div>
+  
 </section>
 
 <!-- ══════════════════════════════
@@ -567,7 +631,9 @@
     <br>
     <div id="blow-ui">
       <p id="blow-hint">💨 Blow the candle!</p>
-      <div id="blow-meter-wrap"><div id="blow-meter-bar"></div></div>
+      <div id="blow-meter-wrap">
+        <div id="blow-meter-bar"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -809,25 +875,62 @@ async function startBGM() {
 }
 
 /* ════════════════════════════════════
-   START EXPERIENCE — triggered by first scroll
+   START EXPERIENCE
+   ボタンクリックでBGMとマイクを一括起動
 ════════════════════════════════════ */
+const startBtn = document.getElementById('start-btn');
 let experienceStarted = false;
-function startExperience() {
+
+startBtn.addEventListener('click', async () => {
   if (experienceStarted) return;
   experienceStarted = true;
-  startBGM();
-  requestOrientationPermission();
-}
 
-// Fire as soon as user scrolls at all
-function onFirstScroll() {
-  const scrollY = window.scrollY || window.pageYOffset;
-  if (scrollY > 1) {
-    startExperience();
-    window.removeEventListener('scroll', onFirstScroll);
+
+  try {
+    // 2. Tone.js (BGM) の開始
+    // ブラウザの保護を解除するためにクリックイベント内で必須
+    await Tone.start();
+    startBGM(); 
+
+    // 3. マイク権限の先行取得
+    // ここで許可を得ておけば、後のロウソクシーンでスムーズに開始できる
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    // 一旦ストリームを保持するか、一度閉じて後で再開できるようにする
+    window.preAuthorizedStream = stream;
+
+    // 4. ジャイロセンサー（星の揺れ）の許可 (iOS用)
+    requestOrientationPermission();
+      
+    // 3. 次のシーン（誕生日シーン）までゆっくりスクロール
+    const nextSection = document.getElementById('scene-birthday');
+    
+    // ほんの少し間を置いてからスクロールを開始（余韻のため）
+    setTimeout(() => {
+      const targetPosition = nextSection.offsetTop;
+      
+        // startBtn のクリックイベントの中
+        anime({
+          targets: document.scrollingElement,
+          scrollTop: targetPosition,
+          duration: 3000,
+          easing: 'easeInOutQuad',
+          complete: () => {
+            // スクロールが終わったら確実に実行
+            console.log("Scroll complete, starting mic...");
+            startBlowDetection();
+          }
+        });
+    }, 800);
+
+    console.log("All systems initialized: BGM, Mic, and Orientation");
+  } catch (err) {
+    console.warn("User denied mic or audio failed:", err);
+    // マイクが拒否されても体験を続けられるようエラーは握りつぶしすぎない
   }
-}
-window.addEventListener('scroll', onFirstScroll, { passive: true });
+});
+
+/* ── 既存の onFirstScroll は削除 ── */
+
 
 // Auto-start mic when birthday scene comes into view
 const micObserver = new IntersectionObserver((entries) => {
@@ -847,60 +950,97 @@ let micAnalyser = null;
 let blowRAF = null;
 
 async function startBlowDetection() {
-  if (candlesBlown) return;
-  if (micStream) return; // already running
-
+  if (candlesBlown) {
+    console.log("Candles already blown, skipping mic start.");
+    return;
+  }
+  
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    // 1. ストリームの取得（ボタンクリック時に保存したもの、または新規）
+    const stream = window.preAuthorizedStream || await navigator.mediaDevices.getUserMedia({ audio: true });
     micStream = stream;
 
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    
+    // AudioContextが停止している場合は再開させる
+    if (audioCtx.state === 'suspended') {
+      await audioCtx.resume();
+    }
+
     const source = audioCtx.createMediaStreamSource(stream);
     micAnalyser = audioCtx.createAnalyser();
     micAnalyser.fftSize = 256;
-    micAnalyser.smoothingTimeConstant = 0.3;
     source.connect(micAnalyser);
 
     const dataArr = new Uint8Array(micAnalyser.frequencyBinCount);
     let highStart = null;
-    const THRESHOLD = 55;
-    const SUSTAIN_MS = 250;
+    
+    // 感度の調整（まずは少し高めにして試してください）
+    const THRESHOLD = 5; 
 
-    function detectBlow() {
-      if (candlesBlown) return;
-      micAnalyser.getByteTimeDomainData(dataArr);
-      let sum = 0;
-      for (let i = 0; i < dataArr.length; i++) {
-        const v = (dataArr[i] - 128) / 128;
-        sum += v * v;
-      }
-      const rms = Math.sqrt(sum / dataArr.length) * 255;
+// 蓄積用の変数を関数の外（または上位）で定義
+let blowAccumulator = 0;
+const MAX_CHARGE = 1000; // どのくらい吹けば満タンになるか（調整可能）
 
-      if (rms > THRESHOLD) {
-        if (!highStart) highStart = Date.now();
-        // Flicker flame with wind
-        const scale = 1 + (rms / 255) * 0.5;
-        document.getElementById('flame-group').style.transform =
-          `scaleX(${scale}) skewX(${(Math.random()-0.5)*15}deg)`;
-        if (Date.now() - highStart > SUSTAIN_MS) {
-          stopMic();
-          blowCandles();
-          return;
-        }
-      } else {
-        highStart = null;
-        document.getElementById('flame-group').style.transform = '';
-      }
-      blowRAF = requestAnimationFrame(detectBlow);
+function detectBlow() {
+  if (candlesBlown) return;
+  
+  micAnalyser.getByteTimeDomainData(dataArr);
+  
+  let sum = 0;
+  for (let i = 0; i < dataArr.length; i++) {
+    const v = (dataArr[i] - 128) / 128;
+    sum += v * v;
+  }
+  const rms = Math.sqrt(sum / dataArr.length) * 255;
+
+  // --- 累積ロジックここから ---
+  if (rms > THRESHOLD) {
+    // しきい値を超えた分だけパワーを溜める
+    // 加算する値（rms - THRESHOLD）を調整することで難易度を変えられます
+    blowAccumulator += (rms - THRESHOLD) * 0.8; 
+
+    // 炎を大きく揺らす
+    const scale = 1 + (rms / 255) * 1.2;
+    const flame = document.getElementById('flame-group');
+    if (flame) {
+      flame.style.transform = `scaleX(${scale}) skewX(${(Math.random()-0.5)*30}deg)`;
     }
+  } else {
+    // 吹くのをやめたときに少しずつ減らしたい場合は、ここを有効にする
+    blowAccumulator = Math.max(0, blowAccumulator - 1); 
+    
+    const flame = document.getElementById('flame-group');
+    if (flame) flame.style.transform = '';
+  }
+
+  // メーターへの反映
+  const progress = Math.min(100, (blowAccumulator / MAX_CHARGE) * 100);
+  const meterBar = document.getElementById('blow-meter-bar');
+  if (meterBar) {
+    meterBar.style.width = progress + '%';
+  }
+
+  // 満タンになったら消去！
+  if (blowAccumulator >= MAX_CHARGE) {
+    blowCandles();
+    return;
+  }
+  // --- 累積ロジックここまで ---
+
+  blowRAF = requestAnimationFrame(detectBlow);
+}
+    
     detectBlow();
 
   } catch (err) {
-    // Mic unavailable — tap hint as fallback
+    console.error("Mic detection error:", err);
+    // 失敗した時のフォールバック：クリックで消せるようにする
     const hint = document.getElementById('blow-hint');
-    hint.textContent = '🎂 Tap here to blow!';
-    hint.style.cursor = 'pointer';
-    hint.onclick = blowCandles;
+    if (hint) {
+      hint.textContent = '🎂 Tap the cake to blow!';
+      hint.onclick = blowCandles;
+    }
   }
 }
 
