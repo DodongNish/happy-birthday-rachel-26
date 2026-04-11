@@ -956,13 +956,13 @@ async function startBGM() {
   const synth = new Tone.PolySynth(Tone.Synth, {
     oscillator: { type: 'triangle' },
     envelope: { attack: 0.08, decay: 0.2, sustain: 0.6, release: 1.2 },
-    volume: -10
+    volume: -8
   }).connect(chorus);
 
   const pad = new Tone.PolySynth(Tone.Synth, {
     oscillator: { type: 'sine' },
     envelope: { attack: 0.8, decay: 0.5, sustain: 0.8, release: 2 },
-    volume: -14
+    volume: -12
   }).connect(reverb);
 
   const bpm = 66;
