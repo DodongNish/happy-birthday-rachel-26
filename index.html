@@ -956,13 +956,13 @@ async function startBGM() {
   const synth = new Tone.PolySynth(Tone.Synth, {
     oscillator: { type: 'triangle' },
     envelope: { attack: 0.08, decay: 0.2, sustain: 0.6, release: 1.2 },
-    volume: -12
+    volume: -10
   }).connect(chorus);
 
   const pad = new Tone.PolySynth(Tone.Synth, {
     oscillator: { type: 'sine' },
     envelope: { attack: 0.8, decay: 0.5, sustain: 0.8, release: 2 },
-    volume: -16
+    volume: -14
   }).connect(reverb);
 
   const bpm = 66;
@@ -1003,11 +1003,28 @@ async function startBGM() {
       pTime += durMap[dur];
     });
   };
+  
+  const playChordsOnly = (startTime) => {
+    let pTime = startTime;
+    chords.forEach(([notes, dur]) => {
+      pad.triggerAttackRelease(notes, durMap[dur] * 0.9, pTime);
+      pTime += durMap[dur];
+    });
+  }
 
   // 実行
   const now = Tone.now() + 0.5;
   playOnce(now);                 // 1回目
   playOnce(now + totalDuration); // 2回目
+  playChordsOnly(now + totalDuration * 2); // コードだけさらに繰り返し
+  playChordsOnly(now + totalDuration * 3);
+  playChordsOnly(now + totalDuration * 4);
+  playChordsOnly(now + totalDuration * 5);
+  playChordsOnly(now + totalDuration * 6);
+  playChordsOnly(now + totalDuration * 7);
+  playChordsOnly(now + totalDuration * 8);
+  playChordsOnly(now + totalDuration * 9);
+  playChordsOnly(now + totalDuration * 10);
 }
 
 /* ════════════════════════════════════
